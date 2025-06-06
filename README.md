@@ -1,9 +1,9 @@
 # CodeCraft
 
-## Prompt
+
 I'm building an adaptive learning platform for algorithms and data structures interview preparation, inspired by MathAcademy's AI tutoring system. The platform uses React + Supabase and has three core components:
 
-## 1. Problem Generation System
+### 1. Problem Generation System
 Instead of using static problems, I need to generate infinite variations:
 - Template-based: Core patterns with variable parameters (e.g., "find kth element" where k, array size, and constraints change)
 - Concept-based: Combining atomic skills (e.g., "array traversal" + "two pointers" = various array problems)
@@ -12,13 +12,13 @@ Instead of using static problems, I need to generate infinite variations:
   - Medium: Moderate inputs (n<100), some edge cases, standard constraints  
   - Hard: Large inputs (n<10^5), complex edge cases, tight constraints
 
-## 2. Knowledge Graph & Prerequisites
+### 2. Knowledge Graph & Prerequisites
 - Parse Neetcode's roadmap to extract topic ordering and build the initial graph
 - Automatically detect implicit prerequisites (e.g., "Merge K Lists" requires "Merge 2 Lists" + "Heaps")
 - Track which prerequisite skills each problem variation exercises
 - Use frontier detection diagnostics to find the boundary between known/unknown topics
 
-## 3. Adaptive Learning with Spaced Repetition
+### 3. Adaptive Learning with Spaced Repetition
 Implement MathAcademy's approach where:
 - Solving complex problems provides implicit practice for simpler prerequisites (e.g., "Binary Tree Maximum Path Sum" implicitly practices tree traversal, recursion, and basic tree properties)
 - Reviews are compressed by selecting harder problems that cover multiple due topics
