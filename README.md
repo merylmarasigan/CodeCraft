@@ -32,7 +32,7 @@ Please help me design [specific aspect: the complete system architecture / datab
 ## Roadmap
 ### Phase 1: Foundation & Infrastructure
 - [ ] **PR 1.1: Project Setup & Database Schema**
-  - [ ] init: Create React app with Javascript, configure Supabase client
+  - [✅] init: Create React app with Javascript, configure Supabase client
   - [ ] db: Add users table with auth integration
   - [ ] db: Create topics table (id, name, description, difficulty_level, category)
   - [ ] db: Create topic_prerequisites table (topic_id, prerequisite_id, relationship_type)
