@@ -33,14 +33,14 @@ Please help me design [specific aspect: the complete system architecture / datab
 ### Phase 1: Foundation & Infrastructure
 - [ ] **PR 1.1: Project Setup & Database Schema**
   - [✅] init: Create React app with Javascript, configure Supabase client
-  - [ ] db: Add users table with auth integration
-  - [ ] db: Create topics table (id, name, description, difficulty_level, category)
-  - [ ] db: Create topic_prerequisites table (topic_id, prerequisite_id, relationship_type)
+  - [✅] db: Add users table with auth integration
+  - [✅] db: Create topics table (id, name, description, difficulty_level, category)
+  - [✅] db: Create topic_prerequisites table (topic_id, prerequisite_id, relationship_type)
   - [ ] db: Create problem_templates table (id, topic_id, template_type, base_pattern, constraints)
   - [ ] db: Create user_knowledge_profile table (user_id, topic_id, repetition_count, last_seen, next_review, mastery_score)
   - [ ] db: Create problem_attempts table (user_id, problem_id, timestamp, correct, time_taken, complexity_achieved)
 - [ ] **PR 1.2: Basic UI Shell & Navigation**
-  - [ ] ui: Add layout with nav, routing for /dashboard, /learn, /practice
+  - [✅] ui: Add layout with nav, routing for /dashboard, /learn, /practice
   - [ ] ui: Create Dashboard component with placeholder sections for progress, daily goals
   - [ ] ui: Create Learn page with topic list placeholder
   - [ ] ui: Create Practice page with code editor integration (Monaco/CodeMirror)

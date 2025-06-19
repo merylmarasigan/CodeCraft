@@ -1,0 +1,14 @@
+.navbar{
+    background-color: #2563EB;
+    color: #0F172A;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.navbar-links > a{
+    margin: 5px
+
+}
