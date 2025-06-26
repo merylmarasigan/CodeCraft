@@ -2,9 +2,10 @@
 
 ## topics to learn to implement knowledge graph
 - Graph Theory
-    - Directed Acyclic Graphs and cycle detection
+    - Directed Acyclic Graphs [X] and cycle detection [X]
+        - 6/25/2025: researched and learned cycle detection algorithm
     - topological sorting 
-    - Graph traversal (DFS/BFS for finding learning paths)
+    - Graph traversal (DFS/BFS for finding learning paths) [X]
     - Reachability analysis (what topics become available after mastering others)
 
 - Database Design for Graph Structures
