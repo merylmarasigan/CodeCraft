@@ -6,9 +6,11 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    color: white;
 }
 
 .navbar-links > a{
-    margin: 5px
+    margin: 5px;
+    color: white;
 
 }

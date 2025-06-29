@@ -1,0 +1,54 @@
+.prereq{
+    /* border: black solid 1px; */
+    width: 50%;
+    align-items: center;
+}
+
+.prereq-topics{
+    /* border: red solid 1px; */
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.prereq-topics > a{
+    padding: 10px;
+    margin: 5px;
+    /* border: solid green 1px; */
+    background-color: #2563EB;
+    border-radius: 12px;
+    color: white
+}
+
+.topics{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.problems{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 50px;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+table{
+    background-color:  #2563EB;
+    width: 50%;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+th {
+    border-bottom: 1px solid white;
+}
+
+td {
+    text-align: center;
+}

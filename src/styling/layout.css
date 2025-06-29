@@ -1,5 +1,16 @@
 .main-section{
-    border: black solid 2px;
-    height: 100vh;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.box{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    /* Add a transition for smooth animation */
+    transition: box-shadow 0.3s ease-in-out; 
+}
+
+.box:hover {
+    /* Define the box-shadow on hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); 
+  }

@@ -41,4 +41,9 @@ WITH RECURSIVE all_prereqs AS (
 )
 SELECT * FROM all_prereqs;
 ```
-- 
+- for the sake of MVP, starting with traditional problem bank
+
+06/28:
+- Implemented UI for basic landing page and topics page
+- Will have to discuss Problem generation at next meeting (or later time)
+- WIll have to disucss content generation for prereq learning pages at a later time

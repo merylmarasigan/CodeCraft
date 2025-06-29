@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Practice from './components/Practice';
 import Learn from './components/Learn';
+import Topic from './components/Topic';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path='/practice' element={<Practice/>} />
-          <Route path='/learn' element={<Learn/>} />
+          <Route path='/practice/:title' element={<Practice/>} />
+          <Route path='/learn/:title' element={<Learn/>} />
+          <Route path='/topic/:title/:id' element={<Topic/>} />
 
         </Routes>
       </BrowserRouter>
