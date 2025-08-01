@@ -1,187 +1,20 @@
-.practice-container {
-    display: flex;
-    height: calc(100vh - 60px); /* Adjust based on your navbar height */
-    background-color: #f5f5f5;
-}
-
-.problem-panel {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: white;
-    border-right: 1px solid #e0e0e0;
-}
-
-.problem-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.problem-header h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-}
-
-.difficulty {
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.difficulty.easy {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.difficulty.medium {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-.difficulty.hard {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-.problem-description {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    line-height: 1.6;
-    color: #333;
-}
-
-.problem-description pre {
-    white-space: pre-wrap;
-    font-family: inherit;
-    margin: 0;
-}
-
-.editor-panel {
-    flex: 1;
+.practice{
     display: flex;
     flex-direction: column;
-    background-color: #1e1e1e;
+    height: 100vh;
+    /* border: solid red 1px; */
+    
 }
 
-.editor-controls {
+.content{
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    background-color: #2d2d30;
-    border-bottom: 1px solid #3e3e42;
+    /* border: blue solid 1px; */
+    height: 70%;
 }
 
-.language-selector {
-    padding: 6px 12px;
-    border: 1px solid #3e3e42;
-    border-radius: 4px;
-    background-color: #3c3c3c;
-    color: white;
-    font-size: 14px;
-}
-
-.language-selector:focus {
-    outline: none;
-    border-color: #2563EB;
-}
-
-.editor-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-    color: white;
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background-color: #5a6268;
-}
-
-.btn-primary {
-    background-color: #2563EB;
-    color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: #1d4ed8;
-}
-
-.btn-success {
-    background-color: #28a745;
-    color: white;
-}
-
-.btn-success:hover:not(:disabled) {
-    background-color: #218838;
-}
-
-.code-editor {
-    flex: 1;
-    border-bottom: 1px solid #3e3e42;
-}
-
-.output-panel {
-    height: 200px;
-    background-color: #1e1e1e;
-    padding: 15px;
-    overflow-y: auto;
-}
-
-.output-panel h3 {
-    margin: 0 0 10px 0;
-    color: white;
-    font-size: 16px;
-}
-
-.output-content {
-    background-color: #0d1117;
-    color: #c9d1d9;
-    padding: 12px;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    margin: 0;
-    border: 1px solid #21262d;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .practice-container {
-        flex-direction: column;
-        height: auto;
-    }
-    
-    .problem-panel {
-        border-right: none;
-        border-bottom: 1px solid #e0e0e0;
-        max-height: 40vh;
-    }
-    
-    .editor-panel {
-        min-height: 60vh;
-    }
+.output-window{
+    text-align: start;
+    margin: 5px;
 }
