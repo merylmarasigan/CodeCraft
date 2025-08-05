@@ -16,5 +16,8 @@
 
 .output-window{
     text-align: start;
-    margin: 5px;
+    /* margin: 5px; */
+    border: solid hsl(221, 83%, 53%) 5px;
+    height:30%;
+
 }

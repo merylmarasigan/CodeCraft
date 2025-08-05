@@ -15,6 +15,7 @@ import '../styling/Practice.css'
         }`
         };
 
+
         return templates[problemTitle];
     }
 

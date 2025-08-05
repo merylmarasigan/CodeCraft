@@ -1,5 +1,5 @@
 // src/components/CodeEditor.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import '../styling/CodeEditor.css'
 
@@ -45,6 +45,8 @@ import '../styling/CodeEditor.css'
 //     </div>
 //   );
 // };
+
+
 const CodeEditor = (props) => {
     const[language, setLanguage ] = useState('python')
     const[code, setCode] = useState('')
@@ -52,6 +54,16 @@ const CodeEditor = (props) => {
     const templates = {
         "python": `def ${functionName}(parameters):\n   # Write your code here\n    pass`, 
         "javascript": `function ${functionName}(parameters){\n  //function body goes here\n}`
+    }
+
+    useEffect(() => {
+        setCode(templates[language])
+    })
+
+    const handleLanguageChange = (e) => {
+        setLanguage(e.target.value);
+    
+        console.log(`Language switched to: ${language}`)
     }
     return(
         <div className='editor'>
@@ -64,15 +76,15 @@ const CodeEditor = (props) => {
                 >
                     <option value="python">Python</option>
                     <option value="javascript">JavaScript</option>
-                    <option value="java">Java</option>
+                    {/* <option value="java">Java</option> */}
                 </select>
                 
             </div>
            <Editor 
                 height="100%"
                 theme='vs-dark'
-                defaultLanguage={language}
-                defaultValue={templates[language]}
+                language={language}
+                value={templates[language]}
             />
         </div>
     )
