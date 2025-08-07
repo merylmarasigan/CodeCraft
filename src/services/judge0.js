@@ -1,6 +1,7 @@
+// src/services/judge0.js (Fixed - Remove expected_output)
 import axios from 'axios';
 
-// Judge0 API Configuration - using your environment variables
+// Judge0 API Configuration
 const JUDGE0_API_URL = process.env.REACT_APP_JUDGE0_API_URL;
 const RAPIDAPI_KEY = process.env.REACT_APP_JUDGE0_RAPIDAPI_KEY;
 const RAPIDAPI_HOST = process.env.REACT_APP_JUDGE0_RAPIDAPI_HOST;
@@ -24,56 +25,66 @@ const judge0Api = axios.create({
   }
 });
 
-// Function to submit code for execution
-export const submitCode = async (sourceCode, languageId, stdin = '', expectedOutput = '') => {
+// Function to submit code for execution (FIXED - removed expected_output)
+export const submitCode = async (sourceCode, languageId, stdin = '') => {
   try {
-    const response = await judge0Api.post('/submissions', {
-      source_code: btoa(sourceCode),        // Base64 encode the code
-      language_id: languageId,              // Tell Judge0 what language this is
-      stdin: btoa(stdin),                   // Input data for the program
-      expected_output: btoa(expectedOutput) // What we expect the output to be
+    console.log('Submitting code:', { sourceCode, languageId });
+    
+    const response = await judge0Api.post('/submissions?wait=false', {
+      source_code: sourceCode,              // Send as plain text
+      language_id: languageId,              
+      stdin: stdin                          // Send as plain text
+      // REMOVED: expected_output - this was causing the "Wrong Answer" status
     });
     
+    console.log('Submission response:', response.data);
     return response.data.token;
   } catch (error) {
-    console.error('Error submitting code:', error);
+    console.error('Error submitting code:', error.response?.data || error.message);
     throw error;
   }
 };
 
-// Function to get the results of a code execution
+// Function to get the results of a code execution (no base64)
 export const getSubmissionResult = async (token) => {
   try {
     const response = await judge0Api.get(`/submissions/${token}`);
     
-    // Judge0 returns results in base64, so we need to decode them
+    console.log('Submission result:', response.data);
+    
+    // Judge0 returns results as plain text when base64_encoded is not set
     const result = {
       ...response.data,
-      stdout: response.data.stdout ? atob(response.data.stdout) : '',
-      stderr: response.data.stderr ? atob(response.data.stderr) : '',
-      compile_output: response.data.compile_output ? atob(response.data.compile_output) : ''
+      stdout: response.data.stdout || '',
+      stderr: response.data.stderr || '',
+      compile_output: response.data.compile_output || ''
     };
     
     return result;
   } catch (error) {
-    console.error('Error getting submission result:', error);
+    console.error('Error getting submission result:', error.response?.data || error.message);
     throw error;
   }
 };
 
 // Function to wait for code execution to complete
-export const waitForResult = async (token, maxAttempts = 10) => {
+export const waitForResult = async (token, maxAttempts = 15) => {
+  console.log('Waiting for result, token:', token);
+  
   for (let i = 0; i < maxAttempts; i++) {
     const result = await getSubmissionResult(token);
+    
+    console.log(`Attempt ${i + 1}, Status:`, result.status);
     
     // Judge0 status codes:
     // 1 = In Queue, 2 = Processing, 3+ = Finished
     if (result.status.id > 2) {
+      console.log('Execution completed:', result);
       return result;
     }
     
-    // Wait 1 second before checking again
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Wait 2 seconds before checking again
+    await new Promise(resolve => setTimeout(resolve, 2000));
   }
   
   throw new Error('Timeout waiting for result');

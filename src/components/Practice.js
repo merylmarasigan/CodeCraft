@@ -1,45 +1,48 @@
-import { useState, useEffect} from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+// src/components/Practice.js
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import ProblemDescription from './ProblemDescription';
 import CodeEditor from './CodeEditor';
-import '../styling/Practice.css'
-    const Practice = () => {
-    const {title} = useParams();
-    const [userCode, setUserCode] = useState('');
+import TestResults from './TestResults';
+import '../styling/Practice.css';
 
-    //default starter code for different problems
-    const getStarterCode = (problemTitle) => {
-        const templates = {
-            'Contains Duplicate': `function containsDuplicate(nums){
-            /*Write your solution here*/
-        }`
-        };
+const Practice = () => {
+    const { title } = useParams();
+    const [testResults, setTestResults] = useState(null);
 
+    // Convert problem title to proper camelCase function name
+    const getFunctionName = (problemTitle) => {
+        // Remove spaces and special chars, then convert to camelCase
+        const words = problemTitle.split(/\s+/);
+        const camelCase = words[0].toLowerCase() + 
+                         words.slice(1).map(word => 
+                             word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                         ).join('');
+        return camelCase;
+    };
 
-        return templates[problemTitle];
-    }
+    const handleTestResults = (results) => {
+        setTestResults(results);
+        console.log('Received test results:', results);
+    };
 
-    const handleCodeChanges = (newCode) => {
-        setUserCode(newCode);
-    }
-
-    // const handleRunCode = () => {
-    //     console.log('Running code');
-    //     alert('Code execution would happen here\nCheck your console for your code.');
-    // }
-
-    
     return (
         <div className='practice'>
             <div className='content'>
-                <ProblemDescription title={title}/>
-                <CodeEditor functionName={title.replace(/\s/g,'')}/>
+                <ProblemDescription title={title} />
+                <CodeEditor 
+                    functionName={getFunctionName(title)}
+                    problemName={title}
+                    onTestResults={handleTestResults}
+                />
             </div>
+            
             <div className='output-window'>
-                <h2> Output Results</h2>
+                <h2>Test Results</h2>
+                <TestResults results={testResults} />
             </div>
         </div>
     );
-}
- 
+};
+
 export default Practice;

@@ -1,90 +1,121 @@
-// src/components/CodeEditor.js
+// src/components/CodeEditor.js - Fixed template bug
 import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
+import testRunner from '../services/testRunner';
 import '../styling/CodeEditor.css'
 
-
-// { 
-//     initialCode = '', 
-//     language = 'javascript',
-//     onCodeChange,
-//     height = '500px' 
-//   }
-// const CodeEditor = (props) => {
-//     const initialCode = props.initialCode;
-//     const height = props.height;
-//     const onCodeChange;
-//   const [code, setCode] = useState(initialCode);
-
-//   // Handle when user types in the editor
-//   const handleEditorChange = (value) => {
-//     setCode(value);
-//     if (onCodeChange) {
-//       onCodeChange(value);
-//     }
-//   };
-
-//   return (
-//     <div style={{ border: '1px solid #ccc', borderRadius: '4px' }} className='editor'>
-//       <Editor
-//         // height={height}
-//         // defaultLanguage={language}
-//         // defaultValue={initialCode}
-//         // value={code}
-//         onChange={handleEditorChange}
-//         theme="vs-dark" // You can use 'light' or 'vs-dark'
-//         options={{
-//           fontSize: 14,
-//           minimap: { enabled: false }, // Disable minimap for cleaner look
-//           scrollBeyondLastLine: false,
-//           automaticLayout: true, // Auto-resize when container changes
-//           tabSize: 2,
-//           wordWrap: 'on'
-//         }}
-//       />
-//     </div>
-//   );
-// };
-
-
-const CodeEditor = (props) => {
+const CodeEditor = ({functionName, problemName, onTestResults}) => {
     const[language, setLanguage ] = useState('python')
     const[code, setCode] = useState('')
-    const functionName= props.functionName;
-    const templates = {
-        "python": `def ${functionName}(parameters):\n   # Write your code here\n    pass`, 
-        "javascript": `function ${functionName}(parameters){\n  //function body goes here\n}`
+    const [isTestRunning, setTestIsRunning]= useState(false);
+   
+    const getTemplate = (lang, funcName) => {
+        const templates = {
+            "python": `def ${funcName}(nums):\n   # Write your code here\n    pass`, 
+            "javascript": `function ${funcName}(nums){\n  //function body goes here\n}`
+        };
+        return templates[lang] || '';
     }
-
-    useEffect(() => {
-        setCode(templates[language])
-    })
+    
+    React.useEffect(() => {
+        if(functionName){
+            setCode(getTemplate(language, functionName)); // Fixed: using functionName correctly
+        }
+    },[language, functionName]);
 
     const handleLanguageChange = (e) => {
-        setLanguage(e.target.value);
-    
-        console.log(`Language switched to: ${language}`)
+        const newLanguage = e.target.value
+        setLanguage(newLanguage);
+        console.log(`Language switched to: ${newLanguage}`); // Fixed: using newLanguage
     }
+    
+    const handleCodeChange = (value) => {
+        setCode(value || '');
+    }
+
+    const runTests = async() => {
+        if(!code.trim()){
+            alert(`Please write some code first!`);
+            return;
+        }
+
+        if(!problemName){
+            alert(`Problem name is required to run tests!`);
+            return; // Added return here
+        }
+
+        setTestIsRunning(true);
+
+        try{
+            console.log(`Running test for: ${problemName}`);
+            console.log(`Function name: ${functionName}`);
+            console.log(`Code: ${code}`);
+            
+            const results = await testRunner.runTests(code, problemName, language);
+
+            //pass results back to parent component
+            if(onTestResults){
+                onTestResults(results);
+            }
+
+            console.log('Test results:', results);
+        }catch(error){
+            console.error('Error running tests: ', error);
+            const errorResult = {
+                success: false,
+                error: error.message
+            };
+
+            if(onTestResults){
+                onTestResults(errorResult)
+            }
+        }finally{
+            setTestIsRunning(false);
+        }
+    }
+    
     return(
         <div className='editor'>
             <div className='editor-controls'>
-                <button> Run</button>
+            <button 
+                    onClick={runTests} 
+                    disabled={isTestRunning || !code.trim()}
+                    style={{
+                        backgroundColor: isTestRunning ? '#6c757d' : '#28a745',
+                        color: 'white',
+                        border: 'none',
+                        padding: '8px 16px',
+                        borderRadius: '4px',
+                        cursor: isTestRunning ? 'not-allowed' : 'pointer'
+                    }}
+                >
+                    {isTestRunning ? 'Running Tests...' : 'Run Tests'}
+                </button>
                 <select
                     value={language} 
                     className='language-selector'
-                    onChange={(e) => {setLanguage(e.target.value)}}
+                    onChange={handleLanguageChange}
+                    disabled={isTestRunning}
                 >
                     <option value="python">Python</option>
                     <option value="javascript">JavaScript</option>
-                    {/* <option value="java">Java</option> */}
                 </select>
                 
             </div>
-           <Editor 
+            <Editor 
                 height="100%"
                 theme='vs-dark'
                 language={language}
-                value={templates[language]}
+                value={code}
+                onChange={handleCodeChange}
+                options={{
+                    fontSize: 14,
+                    minimap: { enabled: false },
+                    scrollBeyondLastLine: false,
+                    automaticLayout: true,
+                    tabSize: 2,
+                    wordWrap: 'on'
+                }}
             />
         </div>
     )

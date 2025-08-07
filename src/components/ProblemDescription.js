@@ -18,6 +18,7 @@ const ProblemDescription = (props) => {
     return (
         <div className='description'>
             <h2>{props.title}</h2>
+            <p>{descriptions[props.title]}</p>
             <div className='examples'>
 
                 <div className='example'>
