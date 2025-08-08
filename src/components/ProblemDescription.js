@@ -12,7 +12,7 @@ const ProblemDescription = (props) => {
         'Contains Duplicate': [`Input: nums = [1,2,3,3]`,
             `Input: nums = [1,2,3,4]`]
     }
-    const outputs = {
+    const outputs = { 
         'Contains Duplicate': [`Output: true`, 'Output:false']
     }
     return (
