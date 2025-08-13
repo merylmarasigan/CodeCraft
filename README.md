@@ -36,16 +36,15 @@ Please help me design [specific aspect: the complete system architecture / datab
 **feat: Initialize project with database schema**
 
 - [ ] **chore: Create React app with Supabase**
-  - [ ] Run `create-react-app codecraft --template typescript`
-  - [ ] Install Supabase client `npm install @supabase/supabase-js`
-  - [ ] Create `.env.local` with Supabase URL and anon key
-  - [ ] Setup folder structure (`/components`, `/lib`, `/pages`)
+  - [X] Run `create-react-app codecraft --template typescript`
+  - [X] Install Supabase client `npm install @supabase/supabase-js`
+  - [X] Create `.env.local` with Supabase URL and anon key
 
 - [ ] **migration: Create all tables**
-  - [ ] Create `concepts` table
-  - [ ] Create `problems` table  
-  - [ ] Create `users` table
-  - [ ] Create `attempts` table
+  - [X] Create `concepts` table
+  - [X] Create `problems` table  
+  - [X] Create `users` table
+  - [X] Create `attempts` table
 
 - [ ] **migration: Add RLS policies for user attempts**
   - [ ] Enable RLS on `attempts` table

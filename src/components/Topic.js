@@ -8,7 +8,8 @@ import {Link} from 'react-router-dom'
 
 const Topic = () => {
     const {title, id} = useParams();
-    const [prereqs, setPreReqs] = useState(null);
+    const [prereqsIds, setPreReqIds] = useState([]);
+    const [prereqs, setPreReqs] = useState([]);
     const [fetchError, setFetchError] = useState(null)
 
     const problems=[
@@ -21,23 +22,46 @@ const Topic = () => {
         const fetchPrereqs = async () => {
             // Convert string ID to integer
             const topicId = parseInt(id);
-            
+            console.log('id param:', id, 'parsed id:', parseInt(id));
             const {data, error} = await supabase
-            .from('prereqs')
-            .select('topics!prereqs_prereq_id_fkey(name)')  
-            .eq('topic_id', parseInt(id));
+            .from('concepts')
+            .select('prereqs')  
+            .eq('concept_id', parseInt(id))
+            .single();
             
-    
             if(error){
                 setFetchError('Could not fetch data')
-                setPreReqs(null);
+                setPreReqIds(null);
                 return;
             }
     
             if(data){
-                setPreReqs(data)
+                setPreReqIds(data['prereqs'])
                 setFetchError(null)
+
+                if(data['prereqs'] && data['prereqs'].length > 0){
+                    const {data: preReqNames, error: namesError} = await supabase
+                    .from('concepts')
+                    .select('name')
+                    .in('concept_id',data['prereqs'])
+                    console.log(preReqNames)
+
+                    if(namesError){
+                        setFetchError('Could not fetch prerequisite names')
+                        return;
+                    }
+
+                    if(preReqNames){
+                        setPreReqs(preReqNames)
+                    }
+                }else{
+                    setPreReqs([])
+                }
             }
+
+            
+
+
         }
         
         fetchPrereqs();
@@ -55,11 +79,12 @@ const Topic = () => {
                     <div className='prereq-topics'>
                         {prereqs.map((pr,index) => {
                                 // return <a  key={index}>{pr.topics.name}</a>
-                               return <Link to={`/learn/${pr.topics.name}`}
+                               return <Link to={`/learn/${pr.name}`}
                                className='box'
                                style={{ textDecoration: 'none' }}
-                               >{pr.topics.name}</Link>
+                               >{pr.name}</Link>
                             })}
+                        {}
                     </div>
                        
                 </div>

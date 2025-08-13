@@ -6,27 +6,29 @@ import { useState, useEffect} from 'react';
 import {Link} from 'react-router-dom'
 
 const Home = () => {
-    const [fetchError, setFetchEror] = useState(null);
+    const [fetchError, setFetchError] = useState(null);
     const [mainTopics, setMainTopics] = useState(null);
 
     useEffect(() => {
         const fetchMainTopics = async () => {
-            const {data, error} = await supabase.from('topics').select().eq('main_topic', true);
+            const {data, error} = await supabase.from('concepts').select('*');
 
             if(error){
-                setFetchEror('Could not fetch data');
+                setFetchError('Could not fetch data');
                 setMainTopics(null);
                 console.log(error)
             }
 
             if(data){
-                setMainTopics(data);
-                setFetchEror(null);
+                const hasPrereqs = data.filter((concept)=> {return concept['prereqs'] !== null})
+                setMainTopics(hasPrereqs);
+                console.log(data);
+                setFetchError(null);
             }
 
         }
         fetchMainTopics();
-    } , [mainTopics])
+    } , [])
     return ( 
         <div className='practice main-section'>
             <h1>Practice</h1>
@@ -39,8 +41,8 @@ const Home = () => {
             {mainTopics && (
                 <div className="topics-container">
                     {mainTopics.map((topic) => (
-                        <div key={topic.id} className="topic box">
-                            <Link to={`/topic/${topic.name}/${topic.id}`} 
+                        <div key={topic.concept_id} className="topic box">
+                            <Link to={`/topic/${topic.name}/${topic.concept_id}`} 
                             style={{ textDecoration: 'none', color: 'white'}}
                             >{topic.name}</Link>
                             {/* Add other topic properties as needed */}
