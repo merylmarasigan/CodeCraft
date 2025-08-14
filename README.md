@@ -224,6 +224,9 @@ Please help me design [specific aspect: the complete system architecture / datab
 | source_url  | string      | Link to original source (e.g., Neetcode) |
 | difficulty  | enum(easy, medium, hard) | Difficulty level |
 | concept_id  | FK → Concept | Associated concept for this problem |
+| example_1  | (input(str), output(str)) | Example to be shown |
+| example_2  | (input(str), output(str)) | Example to be shown |
+
 
 ---
 

@@ -1,36 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../styling/ProblemDescription.css'
+import { useState } from "react";
+import { supabase } from '../services/supabase';
 
 const ProblemDescription = (props) => {
+    
+    const [desc, setDescription] = useState(null);
 
+    useEffect(() => {
+        const fetchProblemDesc =  async () => {
+            const {data, error} = await supabase
+            .from('problems')
+            .select('*')
+            .eq('title', props.title)
+            .single();
 
-    const descriptions = {
-        'Contains Duplicate': 'Given an integer array, nums, return true if any value appears more than once in the aray, otherwise return false'
-    }
+            if(data){
+                console.log(data);
+                setDescription(data)
+            }
 
-    const inputs = {
-        'Contains Duplicate': [`Input: nums = [1,2,3,3]`,
-            `Input: nums = [1,2,3,4]`]
-    }
-    const outputs = { 
-        'Contains Duplicate': [`Output: true`, 'Output:false']
-    }
+            if(error){
+                console.log('ERROR!');
+            }
+        }
+
+        fetchProblemDesc();
+
+        
+    },[])
+     
+    
+
     return (
         <div className='description'>
-            <h2>{props.title}</h2>
-            <p>{descriptions[props.title]}</p>
+            <h2>{desc?.title || "Loading..."}</h2>
+            <p>{desc?.description || 'Loading...'}</p>
             <div className='examples'>
 
-                <div className='example'>
+                {desc !== null && <div className='example'>
                     <p className='example-title'>Example 1</p>
-                    <p>{inputs[props.title][0]}</p>
-                    <p>{outputs[props.title][0]}</p>
-                </div>
-                <div className='example'>
+                    <p>Input: {desc['example1']['input']}</p>
+                    <p>Output: {desc['example1']['output']}</p>
+                </div>}
+                {desc !== null && <div className='example'>
                     <p className='example-title'>Example 2</p>
-                    <p>{inputs[props.title][1]}</p>
-                    <p>{outputs[props.title][1]}</p>
-                </div>
+                    <p>Input: {desc['example2']['input']}</p>
+                    <p>Output: {desc['example2']['output']}</p>
+                </div>}
             </div>
 
             
